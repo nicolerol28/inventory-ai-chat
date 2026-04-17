@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { loginRequest } from "../api/auth";
 
@@ -8,6 +8,36 @@ export function ReAuthModal() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const dialogRef = useRef(null);
+
+  useEffect(() => {
+    if (!showReAuth) return;
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    function onKeyDown(e) {
+      if (e.key !== "Tab") return;
+      const live = Array.from(
+        dialog.querySelectorAll('input:not([disabled]), button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+      );
+      const first = live[0];
+      const last = live[live.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last?.focus();
+        }
+      } else {
+        if (document.activeElement === last) {
+          e.preventDefault();
+          first?.focus();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [showReAuth]);
 
   if (!showReAuth) return null;
 
@@ -30,11 +60,17 @@ export function ReAuthModal() {
 
   return (
     <>
-      <div className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40" />
+      <div className="fixed inset-0 bg-black/20 dark:bg-black/40 z-40" aria-hidden="true" />
       <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
-        <div className="pointer-events-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl p-6 w-80 flex flex-col gap-4">
+        <div
+          ref={dialogRef}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="reauth-title"
+          className="pointer-events-auto bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-xl p-6 w-80 flex flex-col gap-4"
+        >
           <div>
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-white">
+            <h3 id="reauth-title" className="text-sm font-semibold text-gray-900 dark:text-white">
               Sesión expirada
             </h3>
             <p className="text-xs text-gray-400 mt-1">
