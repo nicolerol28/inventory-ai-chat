@@ -6,6 +6,8 @@ React chat interface for the Inventory AI Assistant. Built with Vite, Tailwind C
 
 > Demo credentials — click **"Probar demo"** on the login page for instant access with pre-seeded data. Data resets nightly.
 
+![Chat UI](docs/chat-ui.png)
+
 ---
 
 ## Tech Stack
