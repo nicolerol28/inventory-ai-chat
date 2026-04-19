@@ -105,7 +105,7 @@ export function Sidebar({
                     type="button"
                     onClick={(e) => onDelete(e, conv.id)}
                     disabled={deletingId === conv.id}
-                    className="hidden group-hover:flex focus:flex items-center justify-center w-6 h-6 rounded text-gray-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:text-red-500 dark:focus:text-red-400 transition-colors flex-shrink-0 ml-1"
+                    className="lg:hidden group-hover:flex focus:flex flex lg:opacity-0 lg:group-hover:opacity-100 items-center justify-center w-6 h-6 rounded text-gray-400 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 focus:text-red-500 dark:focus:text-red-400 transition-colors flex-shrink-0 ml-1"
                     aria-label={`Eliminar conversación: ${conv.title || "Sin título"}`}
                   >
                     {deletingId === conv.id ? (

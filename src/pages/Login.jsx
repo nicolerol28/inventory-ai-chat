@@ -109,11 +109,8 @@ export function Login() {
 
           {/* Logo móvil */}
           <div className="flex items-center gap-2 mb-8 lg:hidden">
-            <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5">
-                <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
-                <path d="M12 12l9-5.2M12 12l-9-5.2M12 12v10"/>
-              </svg>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+              <img src="/favicon.svg" alt="logo" className="w-8 h-8" />
             </div>
             <span className="text-gray-900 font-bold text-sm">Inventory AI</span>
           </div>
