@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { loginRequest } from "../api/auth";
 
 export function ReAuthModal() {
-  const { showReAuth, setShowReAuth, login } = useAuth();
+  const { showReAuth, setShowReAuth, login, logout } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -79,7 +81,9 @@ export function ReAuthModal() {
           </div>
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+            <label htmlFor="reauth-email" className="sr-only">Correo electrónico</label>
             <input
+              id="reauth-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -88,7 +92,9 @@ export function ReAuthModal() {
               autoFocus
               className="w-full px-3 py-2 rounded-lg text-sm border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-950 text-gray-700 dark:text-gray-300 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500"
             />
+            <label htmlFor="reauth-password" className="sr-only">Contraseña</label>
             <input
+              id="reauth-password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -107,6 +113,14 @@ export function ReAuthModal() {
               {loading ? "Ingresando..." : "Reingresar"}
             </button>
           </form>
+
+          <button
+            type="button"
+            onClick={() => { logout(); navigate("/login"); }}
+            className="w-full py-1.5 text-xs text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          >
+            Ir al login
+          </button>
         </div>
       </div>
     </>

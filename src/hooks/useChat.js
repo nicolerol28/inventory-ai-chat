@@ -19,6 +19,7 @@ export function useChat(token) {
   const setInitialMessages = useCallback((msgs) => {
     setMessages(
       msgs.map((m) => ({
+        id: m.id ?? crypto.randomUUID(),
         role: m.role,
         content: m.content,
       }))
@@ -33,11 +34,11 @@ export function useChat(token) {
     async (question, conversationId, threadId) => {
       if (!question.trim() || isStreaming) return null;
 
-      setMessages((prev) => [...prev, { role: "user", content: question }]);
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "user", content: question }]);
       setIsStreaming(true);
       setRateLimited(false);
 
-      setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
+      setMessages((prev) => [...prev, { id: crypto.randomUUID(), role: "assistant", content: "" }]);
 
       const controller = new AbortController();
       abortRef.current = controller;
@@ -78,7 +79,7 @@ export function useChat(token) {
           setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
-              role: "assistant",
+              ...updated[updated.length - 1],
               content: "Has alcanzado el límite de solicitudes. Espera un momento antes de enviar otro mensaje.",
               isError: true,
             };
@@ -137,7 +138,7 @@ export function useChat(token) {
             setMessages((prev) => {
               const updated = [...prev];
               updated[updated.length - 1] = {
-                role: "assistant",
+                ...updated[updated.length - 1],
                 content: accumulated,
               };
               return updated;
@@ -153,7 +154,7 @@ export function useChat(token) {
           setMessages((prev) => {
             const updated = [...prev];
             updated[updated.length - 1] = {
-              role: "assistant",
+              ...updated[updated.length - 1],
               content: answer,
             };
             return updated;
@@ -178,7 +179,7 @@ export function useChat(token) {
         setMessages((prev) => {
           const updated = [...prev];
           updated[updated.length - 1] = {
-            role: "assistant",
+            ...updated[updated.length - 1],
             content: "Error al conectar con el asistente. Intenta de nuevo.",
             isError: true,
           };

@@ -20,6 +20,7 @@ export function Login() {
     setDemoError(null);
     setDemoLoading(true);
     try {
+      // Demo credentials intentionally exposed in production bundle — this is a portfolio demo access point
       const data = await loginRequest(
         import.meta.env.VITE_DEMO_EMAIL,
         import.meta.env.VITE_DEMO_PASSWORD,
@@ -125,10 +126,11 @@ export function Login() {
           {/* Formulario */}
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1.5">
+              <label htmlFor="login-email" className="block text-xs font-medium text-gray-500 mb-1.5">
                 Correo electrónico
               </label>
               <input
+                id="login-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -139,10 +141,11 @@ export function Login() {
             </div>
 
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-1.5">
+              <label htmlFor="login-password" className="block text-xs font-medium text-gray-500 mb-1.5">
                 Contraseña
               </label>
               <input
+                id="login-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}

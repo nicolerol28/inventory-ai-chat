@@ -129,15 +129,23 @@ export function Chat() {
     try {
       if (!convId) {
         const title = text.length > 40 ? text.slice(0, 40) + "..." : text;
-        const newConv = await create(title);
+        let newConv;
+        try {
+          newConv = await create(title);
+        } catch {
+          setSendError("No se pudo crear la conversación. Intenta de nuevo.");
+          return;
+        }
         convId = newConv.id;
         setActiveConversationId(convId);
       }
 
-      setInput("");
       const result = await sendMessage(text, convId, threadId);
-      if (result?.threadId) {
-        setThreadId(result.threadId);
+      if (result !== null) {
+        setInput("");
+        if (result?.threadId) {
+          setThreadId(result.threadId);
+        }
       }
 
       if (isNewConversation) {
@@ -158,7 +166,7 @@ export function Chat() {
   const activeConversation = conversations.find((c) => c.id === activeConversationId);
 
   const initials = user?.name
-    ? user.name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase()
+    ? user.name.split(" ").filter((w) => w.length > 0).map((w) => w[0]).join("").slice(0, 2).toUpperCase()
     : user?.sub?.split("@")[0].slice(0, 2).toUpperCase() ?? "U";
 
   const username = user?.name ?? user?.sub?.split("@")[0] ?? "Usuario";

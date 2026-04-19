@@ -88,9 +88,9 @@ export function MessageList({
         <div
           className="max-w-3xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-4"
         >
-          {messages.filter((msg) => msg.role !== "assistant" || msg.content !== "").map((msg, i) => (
+          {messages.filter((msg) => msg.role !== "assistant" || msg.content !== "").map((msg) => (
             <div
-              key={i}
+              key={msg.id}
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
             >
               {msg.role === "assistant" && (
