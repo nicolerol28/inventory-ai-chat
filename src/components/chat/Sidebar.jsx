@@ -16,7 +16,7 @@ export function Sidebar({
 }) {
   return (
     <aside
-      className={`fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 flex flex-col bg-blue-50 dark:bg-gray-900 border-r border-blue-100 dark:border-gray-800 transition-transform duration-300 lg:static lg:translate-x-0 ${
+      className={`fixed inset-y-0 left-0 z-50 w-64 flex-shrink-0 flex flex-col bg-blue-50 dark:bg-gray-900 border-r border-blue-100 dark:border-gray-800 transition-transform duration-300 rounded-r-2xl lg:rounded-none lg:static lg:translate-x-0 ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >

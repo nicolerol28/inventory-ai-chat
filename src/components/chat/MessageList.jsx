@@ -15,7 +15,6 @@ export function MessageList({
     "Genera un reporte de compras sugeridas",
   ];
 
-  // Fix #6 (aria-live): anuncia solo cuando termina el streaming, no en cada chunk
   const [announcement, setAnnouncement] = useState("");
   const prevStreamingRef = useRef(false);
 
@@ -34,7 +33,6 @@ export function MessageList({
       className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950 transition-colors duration-300"
       aria-label="Mensajes del chat"
     >
-      {/* Región aria-live fuera del flujo visual — anuncia solo al completar */}
       <span
         role="status"
         aria-live="polite"
@@ -44,7 +42,6 @@ export function MessageList({
         {announcement}
       </span>
 
-      {/* Estado vacío */}
       {!activeConversationId && messages.length === 0 && !messagesLoading && (
         <div className="flex flex-col items-center justify-center h-full px-6">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4">
@@ -91,7 +88,7 @@ export function MessageList({
         <div
           className="max-w-3xl mx-auto px-4 sm:px-6 py-6 flex flex-col gap-4"
         >
-          {messages.map((msg, i) => (
+          {messages.filter((msg) => msg.role !== "assistant" || msg.content !== "").map((msg, i) => (
             <div
               key={i}
               className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}

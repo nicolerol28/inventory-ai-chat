@@ -164,7 +164,7 @@ export function Chat() {
   const username = user?.name ?? user?.sub?.split("@")[0] ?? "Usuario";
 
   return (
-    <div className="flex h-screen bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300 overflow-hidden">
+    <div className="flex h-dvh bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-200 transition-colors duration-300 overflow-hidden">
 
       {/* Overlay (mobile) */}
       {sidebarOpen && (
